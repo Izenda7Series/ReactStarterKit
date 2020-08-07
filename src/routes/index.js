@@ -12,8 +12,6 @@ import ExportReport from '../export/ExportReport';
 import ExportReportViewer from '../export/ExportReportViewer';
 import ExportDashboardViewer from '../export/ExportDashboardViewer';
 
-
-
 function AppRouter() {
   return (
     <Router>
@@ -27,7 +25,7 @@ function AppRouter() {
         <PrivateRoute path='/izenda/reportviewer' component={ReportViewer} />
         <PrivateRoute path='/izenda/reportpart' component={ReportPart} />
 
-        <Route path='/viewer/reportpart/:id' component={ExportReport} />
+        <Route path='/viewer/reportpart/:id' component={ExportReport}/>
         <Route path='/report/view/:id' component={ExportReportViewer} />
         <Route path='/dashboard/edit/:id' component={ExportDashboardViewer} />
 

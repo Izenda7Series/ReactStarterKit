@@ -43,4 +43,12 @@ export default class IzendaIntegrate {
       'id': '[your 1st report part id]'
     });
   }
+
+  RenderExportViewer(reportPartId) {
+    IzendaSynergy.setCurrentUserContext({token: 'i7di+WoXTvjk47YhJGhictiBOqsUGIkbgd5B8XizEJ56DC4Ark8TO9YWUs50BH+HFnukB2H1pFZfza4psZCDOA=='})
+    IzendaSynergy.renderReportPart(document.getElementById('export-root'), {
+      "id": reportPartId,
+      "useQueryParam":true,
+    });
+  }
 }

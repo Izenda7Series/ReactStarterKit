@@ -12,7 +12,7 @@ function App() {
   callConfig();
 
   return (
-    <div className="App">
+    <div className="App" id="app-root">
       <AppRouter />
     </div>
   );
