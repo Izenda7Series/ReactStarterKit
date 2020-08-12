@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, FormControl, Label, Button } from 'react-bootstrap';
 import './Login.css';
 import AuthService from '../services/AuthService';
 
@@ -101,7 +100,7 @@ export class Login extends Component {
             }
           </div>
           <br />
-          <Button type="submit" disabled={this.state.loading}>Submit</Button>
+          <button type="submit" disabled={this.state.loading}>Submit</button>
         </form>
       </div>
     );
