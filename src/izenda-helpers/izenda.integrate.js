@@ -1,6 +1,7 @@
 import config from './config';
 
-const IzendaSynergy = require('../../libs/IzendaSynergy/izenda_ui');
+//const IzendaSynergy = require('../../libs/IzendaSynergy/izenda_ui');
+import IzendaSynergy from '../../libs/IzendaSynergy/izenda_ui';
 
 export default class IzendaIntegrate {
 

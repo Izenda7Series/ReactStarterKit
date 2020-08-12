@@ -16,7 +16,7 @@ var ExportReport = createReactClass({
         
         this.currentUserContext = {token: token};
         IzendaSynergy.setCurrentUserContext(this.currentUserContext);
-        IzendaSynergy.renderReportPart(document.getElementById('root'), {
+        IzendaSynergy.renderReportPart(document.getElementById('izenda-export-reportpart'), {
             "id": reportPartId,
             "useQueryParam": true,
         });
@@ -24,8 +24,7 @@ var ExportReport = createReactClass({
     },
     render: function () {
         return (
-            <div></div>
-            //React.createElement('div', { className: 'export', id: 'izenda-export-reportpart' })
+            React.createElement('div', { className: 'export', id: 'izenda-export-reportpart' })
         );
     }
 });

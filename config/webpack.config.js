@@ -540,6 +540,10 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+      // Plugin for IE11 compatabilities
+      new webpack.ProvidePlugin({
+        Promise: 'es6-promise-promise'
+      }),
       // Webpack plugins for Izenda
       new HtmlWebpackExternalsPlugin({
         externals: [
