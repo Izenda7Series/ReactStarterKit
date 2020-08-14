@@ -46,10 +46,10 @@ export class Login extends Component {
   }
 
 
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
     this.setState({ submitted: true });
-    const { tenant, username, password, returnUrl } = this.state;
+    const { tenant, username, password} = this.state;
 
     //stop here if form is invalid
     if (!(username && password)) {
@@ -69,7 +69,7 @@ export class Login extends Component {
         }
       },
         error => {
-          console.log('ERROR LOGGING IN')
+          console.log('ERROR LOGGING IN: '+ error);
           this.setState({ loading: false });
         });
   }
