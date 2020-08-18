@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 import Home from '../home/Home'
 import Login from '../login/Login';
@@ -15,30 +15,42 @@ import DashboardDesigner from '../izenda-components/DashboardDesigner';
 import Dashboard from '../izenda-components/Dashboard';
 import DashboardViewer from '../izenda-components/DashboardViewer';
 import ReportCustomFilter from '../izenda-components/ReportCustomFilter';
+import NavbarComponent from '../navbar/Navbar';
 
 function AppRouter() {
   return (
     <Router>
-      <PrivateRoute exact path='/' component={Home} />
-      <Route path='/login' component={Login} />
-      <PrivateRoute path='/izenda' component={IzendaHome} />
-      <PrivateRoute path='/izenda/settings' component={IzendaSetting} />
-      <PrivateRoute path='/izenda/reportdesigner' component={ReportDesigner} />
-      <PrivateRoute path='/izenda/report' component={ReportList} />
-      <PrivateRoute path='/izenda/reportviewer/:id' component={ReportViewer} />
-      <PrivateRoute path='/izenda/reportpart' component={ReportPart} />
-      <PrivateRoute path='/izenda/reportcustomfilter' component={ReportCustomFilter} />
-      <PrivateRoute path='/izenda/advancedreportpart' component={AdvancedReportPart} />
-      <PrivateRoute path='/izenda/dashboarddesigner' component={DashboardDesigner} />
-      <PrivateRoute path='/izenda/dashboard' component={Dashboard} />
-      <PrivateRoute path='/izenda/dashboardviewer' component={DashboardViewer} />
-      {/* Subreport Route */}
-      <PrivateRoute path='/izenda/report/view/:id' component={ReportViewer} />
-      {/* Export Routes */}
-      <Route path='/viewer/reportpart/:id' component={ExportReport} />
+      <Switch>
+        <Route exact path='/login' component={Login} />
+        {
+          location.pathname !== '/login' && <Route component={DefaultContainer} />
+        }
+      </Switch>
     </Router>
   );
 }
+
+const DefaultContainer = () => (
+  <div>
+    <NavbarComponent></NavbarComponent>
+    <PrivateRoute exact path='/' component={Home} />
+    <PrivateRoute exact path='/izenda' component={IzendaHome} />
+    <PrivateRoute exact path='/izenda/settings' component={IzendaSetting} />
+    <PrivateRoute exact path='/izenda/reportdesigner' component={ReportDesigner} />
+    <PrivateRoute exact path='/izenda/report' component={ReportList} />
+    <PrivateRoute exact path='/izenda/reportviewer/:id' component={ReportViewer} />
+    <PrivateRoute exact path='/izenda/reportpart' component={ReportPart} />
+    <PrivateRoute exact path='/izenda/reportcustomfilter' component={ReportCustomFilter} />
+    <PrivateRoute exact path='/izenda/advancedreportpart' component={AdvancedReportPart} />
+    <PrivateRoute exact path='/izenda/dashboarddesigner' component={DashboardDesigner} />
+    <PrivateRoute exact path='/izenda/dashboard' component={Dashboard} />
+    <PrivateRoute exact path='/izenda/dashboardviewer' component={DashboardViewer} />
+    {/* Subreport Route */}
+    <PrivateRoute exact path='/izenda/report/view/:id' component={ReportViewer} />
+    {/* Export Routes */}
+    <Route exact path='/viewer/reportpart/:id' component={ExportReport} />
+  </div>
+)
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (

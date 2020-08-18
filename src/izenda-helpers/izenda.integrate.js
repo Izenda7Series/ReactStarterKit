@@ -27,7 +27,7 @@ export default class IzendaIntegrate {
   RenderIzendaSettings() {
     this.setContext();
     const dom = document.getElementById('izenda-root');
-    IzendaSynergy.render(dom);
+    IzendaSynergy.renderSettingPage(dom);
     return dom;
   }
 

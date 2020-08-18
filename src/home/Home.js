@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -14,19 +15,13 @@ class Home extends Component {
         });
     }
     render() {
-        console.log('Rendered Report Part Component');
         return (
             <div className="Home">
                 <div className="jumbotron izenda-header">
                     <h1>Izenda Unofficial React Starterkit</h1>
-                    <h3>Hello You Been Logged in!</h3>
                     <p className="lead">
                         This starter kit will help your development team quickly and easily embed Izenda into your application.
                 </p>
-                </div>
-                <div>
-                    <h1>Go to Izenda</h1>
-                    <Link to="/izenda">Izenda Link</Link>
                 </div>
                 <div className="row izenda-base-color">
                     <div className="col-md-4">
