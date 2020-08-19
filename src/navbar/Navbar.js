@@ -26,6 +26,11 @@ class NavbarComponent extends Component {
                             <NavDropdown.Item as={Link} to="/izenda/dashboardviewer">Dashboard Viewer</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
+                    <Nav>
+                        <Nav.Link>Hello Test User</Nav.Link>
+                        <Nav.Link>Create User/ Tenant</Nav.Link>
+                        <Nav.Link>Log Off</Nav.Link>
+                    </Nav>
                 </Navbar.Collapse>
             </Navbar>
         );
