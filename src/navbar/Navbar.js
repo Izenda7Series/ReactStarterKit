@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
 import { NavDropdown, Navbar, Nav, NavbarBrand } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import AuthService from '../services/AuthService';
 class NavbarComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.Auth = new AuthService();
+        this.state = {
+            currentUser: '',
+            isLoggedIn: false
+        }
+        this.handleLogoutClick.bind(this);
+    }
+    componentDidMount() {
+        const currentUser = localStorage.getItem('currentUser');
+        const isLoggedIn = !!localStorage.getItem('tokenKey');
+        this.setState({ currentUser, isLoggedIn });
+    }
+    handleLogoutClick() {
+        this.Auth.logout();
+        this.setState({isLoggedIn: false});
+        //this.props.history.push('/');
+    }
     render() {
         return (
             <Navbar bg="dark" expand="lg" variant="dark">
@@ -26,11 +46,13 @@ class NavbarComponent extends Component {
                             <NavDropdown.Item as={Link} to="/izenda/dashboardviewer">Dashboard Viewer</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-                    <Nav>
-                        <Nav.Link>Hello Test User</Nav.Link>
-                        <Nav.Link>Create User/ Tenant</Nav.Link>
-                        <Nav.Link>Log Off</Nav.Link>
-                    </Nav>
+                    {this.state.isLoggedIn &&
+                        <Nav>
+                            <Nav.Link>Hello {this.state.currentUser}</Nav.Link>
+                            <Nav.Link>Create User/ Tenant</Nav.Link>
+                            <Nav.Link onClick={this.handleLogoutClick()}>Log Off</Nav.Link>
+                        </Nav>
+                    }
                 </Navbar.Collapse>
             </Navbar>
         );

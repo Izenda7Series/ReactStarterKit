@@ -30,13 +30,11 @@ export class AuthService {
         };
         const url = ApiEndpointConfig.getPath('login');
 
-
-
         return fetch(url, requestOptions)
             .then(response => response.json())
             .then(data => {
                 const token = data && data['access_token'];
-                console.log('Integrated Access Token' + token);
+                console.log('Integrated Access Token ' + token);
                 if (token) {
                     this.token = token;
                     localStorage.setItem('currentUser', username);
