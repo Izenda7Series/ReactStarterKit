@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import AuthService from '../services/AuthService';
-
+import { Container, Form, Button } from 'react-bootstrap';
 
 export class Login extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export class Login extends Component {
 
     this.state = {
       tenant: '',
-      email: '',
+      username: '',
       password: '',
       submitted: false,
       loading: false,
@@ -25,11 +25,10 @@ export class Login extends Component {
     if (this.authService.hasToken()) {
       this.authService.logout();
     }
-
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   onChange(e) {
@@ -45,11 +44,10 @@ export class Login extends Component {
     };
   }
 
-
-  handleSubmit = event => {
+  handleSubmit(event) {
     event.preventDefault();
     this.setState({ submitted: true });
-    const { tenant, username, password, returnUrl } = this.state;
+    const { tenant, username, password } = this.state;
 
     //stop here if form is invalid
     if (!(username && password)) {
@@ -65,11 +63,12 @@ export class Login extends Component {
       .then(result => {
         if (result) {
           // Login success
+          this.setState({loading: false})
           this.props.history.push('/');
         }
       },
         error => {
-          console.log('ERROR LOGGING IN')
+          console.log('ERROR LOGGING IN: ' + error);
           this.setState({ loading: false });
         });
   }
@@ -77,32 +76,30 @@ export class Login extends Component {
   render() {
     //const { tenant, username, password, submitted, loading, error } = this.state;
     return (
-      <div className='Login'>
-        <form name="form" onSubmit={this.handleSubmit}>
-          <div>
-            <label>Tenant</label>
-            <input value={this.state.tenant} placeholder="Enter Tenant (Optional)" type="text" onChange={this.handleInputChange('tenant')} />
-          </div>
-          <br />
-          <div>
-            <label>Email/Username</label>
-            <input value={this.state.username} required type="email" placeholder="Enter email" onChange={this.handleInputChange('username')} />
+      <Container>
+        <Form onSubmit={this.handleSubmit}>
+          <h3>Sign In</h3>
+          <Form.Group>
+            <Form.Label>Tenant</Form.Label>
+            <Form.Control value={this.state.tenant} onChange={this.handleInputChange('tenant')} type="text" placeholder="Tenant Name" />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Username</Form.Label>
+            <Form.Control value={this.state.username} onChange={this.handleInputChange('username')} type="text" placeholder="Enter username" />
             {this.state.submitted && !this.state.username &&
-              <div className="help-block">Email/Username is required</div>
+              <div><span>username is required</span></div>
             }
-          </div>
-          <br />
-          <div>
-            <label>Password</label>
-            <input value={this.state.password} required type="password" placeholder="Password" onChange={this.handleInputChange('password')} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control value={this.state.password} onChange={this.handleInputChange('password')} type="password" placeholder="Password" />
             {this.state.submitted && !this.state.password &&
-              <div className="help-block">Password is required</div>
+              <div><span>Password is required</span></div>
             }
-          </div>
-          <br />
-          <button type="submit" disabled={this.state.loading}>Submit</button>
-        </form>
-      </div>
+          </Form.Group>
+          <Button type="submit" disabled={this.state.loading}>Submit</Button>
+        </Form>
+      </Container>
     );
   }
 }

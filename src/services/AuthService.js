@@ -1,7 +1,6 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
-import { request } from 'https';
 export class AuthService {
-    constructor(props) {
+    constructor() {
         this.state = {
             data: null,
         };
@@ -31,13 +30,11 @@ export class AuthService {
         };
         const url = ApiEndpointConfig.getPath('login');
 
-
-
         return fetch(url, requestOptions)
             .then(response => response.json())
             .then(data => {
                 const token = data && data['access_token'];
-                console.log('Integrated Access Token' + token);
+                console.log('Integrated Access Token ' + token);
                 if (token) {
                     this.token = token;
                     localStorage.setItem('currentUser', username);
@@ -61,7 +58,6 @@ export class AuthService {
         const token = localStorage.getItem('tokenKey');
 
         let headers = {};
-        const body = {};
         if (token) {
             headers = { 'Authorization': 'Bearer ' + token };
         }
@@ -71,7 +67,7 @@ export class AuthService {
         };
 
         return fetch(url, requestOptions)
-            .then(response => {
+            .then(() => {
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('tokenKey');
                 localStorage.removeItem('izendatoken');

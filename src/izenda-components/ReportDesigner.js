@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import IzendaIntegrate from '../izenda-helpers/izenda.integrate';
+import IzendaRoot from './IzendaRoot';
 
 class ReportDesigner extends Component {
     constructor(props) {
         super(props);
         this.izIntegrate = new IzendaIntegrate();
+        this.dom = {};
     }
     componentDidMount() {
-        this.izIntegrate.RenderReportDesigner();
+        this.dom = this.izIntegrate.RenderReportDesigner();
     }
-    componentWillUpdate() {
-
+    componentWillUnmount() {
+        this.izIntegrate.DestroyDom(this.dom);
     }
     render() {
-        return null;
+        return (<IzendaRoot />);
     }
 }
 

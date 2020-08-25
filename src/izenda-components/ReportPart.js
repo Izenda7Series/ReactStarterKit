@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './IzendaStyle.css';
 import IzendaIntegrate from '../izenda-helpers/izenda.integrate';
 
 class ReportPart extends Component {
