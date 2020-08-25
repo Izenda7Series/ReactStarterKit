@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppRouter from './routes/index';
+import AppRouter from './routes/routes';
 import IzendaIntegrate from './izenda-helpers/izenda.integrate';
 
 function App() {

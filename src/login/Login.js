@@ -9,7 +9,7 @@ export class Login extends Component {
 
     this.state = {
       tenant: '',
-      email: '',
+      username: '',
       password: '',
       submitted: false,
       loading: false,
@@ -25,11 +25,10 @@ export class Login extends Component {
     if (this.authService.hasToken()) {
       this.authService.logout();
     }
-
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   onChange(e) {
@@ -44,7 +43,6 @@ export class Login extends Component {
       });
     };
   }
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -65,6 +63,7 @@ export class Login extends Component {
       .then(result => {
         if (result) {
           // Login success
+          this.setState({loading: false})
           this.props.history.push('/');
         }
       },
@@ -85,10 +84,10 @@ export class Login extends Component {
             <Form.Control value={this.state.tenant} onChange={this.handleInputChange('tenant')} type="text" placeholder="Tenant Name" />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Email</Form.Label>
-            <Form.Control value={this.state.email} onChange={this.handleInputChange('email')} type="email" placeholder="Enter Email" />
-            {this.state.submitted && !this.state.email &&
-              <div><span>Email is required</span></div>
+            <Form.Label>Username</Form.Label>
+            <Form.Control value={this.state.username} onChange={this.handleInputChange('username')} type="text" placeholder="Enter username" />
+            {this.state.submitted && !this.state.username &&
+              <div><span>username is required</span></div>
             }
           </Form.Group>
           <Form.Group>
