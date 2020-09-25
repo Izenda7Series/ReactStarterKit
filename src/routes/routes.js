@@ -22,6 +22,8 @@ function AppRouter() {
     <Router>
       <Switch>
         <Route exact path='/login' component={LoginContainer} />
+        {/* Export Routes */}
+        <Route exact path='/viewer/reportpart/:id' component={ExportReport} />
         {
           location.pathname !== '/login' && <Route component={DefaultContainer} />
         }
@@ -55,8 +57,6 @@ const DefaultContainer = (props) => (
     <PrivateRoute path='/izenda/dashboardviewer' component={DashboardViewer} />
     {/* Subreport Route */}
     <PrivateRoute path='/izenda/report/view/:id' component={ReportViewer} />
-    {/* Export Routes */}
-    <Route path='/viewer/reportpart/:id' component={ExportReport} />
   </div>
 )
 
