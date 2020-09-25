@@ -26,7 +26,7 @@ class NavbarComponent extends Component {
         return (
             <Navbar bg="dark" expand="lg" variant="dark">
                 <NavbarBrand>React Starter Kit</NavbarBrand>
-                {this.props.isLoggedIn &&
+                { this.props.isLoggedIn && 
                     <React.Fragment>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
@@ -50,7 +50,13 @@ class NavbarComponent extends Component {
                             </Nav>
                             <Nav>
                                 <Nav.Link>Hello {this.state.currentUser}</Nav.Link>
-                                <Nav.Link>Create User/ Tenant</Nav.Link>
+
+                                <NavDropdown title="Accounts" id="basic-nav-accounts">
+                                    <NavDropdown.Item as={Link} to="/izenda/createtenant">Create Tenant</NavDropdown.Item>
+                                    <NavDropdown.Item as={Link} to="/izenda/createuser">Create User</NavDropdown.Item>
+                                   
+                                </NavDropdown>
+
                                 <Nav.Link onClick={this.handleLogoutClick}>Log Off</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>

@@ -13,7 +13,7 @@ export default class ApiEndpointConfig {
             case 'createtenant':
                 return apiEndPoint + 'api/Account/CreateTenant';
             case 'createexternaluser':
-                return apiEndPoint + '/api/external/user';
+                return apiEndPoint + 'api/external/user';
             default:
                 return '';
         }

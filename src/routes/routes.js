@@ -17,6 +17,10 @@ import DashboardViewer from '../izenda-components/DashboardViewer';
 import ReportCustomFilter from '../izenda-components/ReportCustomFilter';
 import NavbarComponent from '../navbar/Navbar';
 
+import CreateUser from '../izenda-components/CreateUser';
+import CreateTenant from '../izenda-components/CreateTenant';
+
+
 function AppRouter() {
   return (
     <Router>
@@ -57,6 +61,11 @@ const DefaultContainer = (props) => (
     <PrivateRoute path='/izenda/report/view/:id' component={ReportViewer} />
     {/* Export Routes */}
     <Route path='/viewer/reportpart/:id' component={ExportReport} />
+
+    <PrivateRoute path='/izenda/createtenant' component={CreateTenant} />
+    <PrivateRoute path='/izenda/createuser' component={CreateUser} />
+
+
   </div>
 )
 
