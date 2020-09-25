@@ -1,6 +1,7 @@
 export default class ApiEndpointConfig {
     static getPath(value) {
-        const apiEndPoint = 'http://izauthapi.azurewebsites.net/';
+        // URL for Authentication Service
+        const apiEndPoint = 'http://localhost:3358/';
         switch (value) {
             case 'register':
                 return apiEndPoint + 'api/Account/Register';
