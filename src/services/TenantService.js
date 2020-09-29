@@ -1,5 +1,5 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
-export class TenantService {
+export class TenantService  {
     constructor() {
         this.state = {
             data: null,
@@ -9,10 +9,10 @@ export class TenantService {
     }
 
 
-    createTenant(tenantid, tenantname){
+    CreateTenant(name, description){
         const url = ApiEndpointConfig.getPath('createtenant');
-        const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
-        const body= JSON.stringify({TenantId: tenantid,  TenantName: tenantname });
+        const httpHeaders = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
+        const body= JSON.stringify({TenantName: name , TenantDescription: description});
         const httpOptions = {
             headers: httpHeaders
         };
