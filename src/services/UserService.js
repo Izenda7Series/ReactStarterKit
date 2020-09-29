@@ -1,5 +1,6 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
-export class UserService {
+
+export class UserService  {
     constructor() {
         this.state = {
             data: null,
@@ -12,7 +13,7 @@ export class UserService {
 
     getUsers() {
         // add authorization header with jwt token
-        const headers = new HttpHeaders({ Authorization: 'Bearer ' + this.authenticationService.token });
+        const headers = new Headers({ Authorization: 'Bearer ' + this.authenticationService.token });
     
         // get users from api
         return this.http.get('/api/users', {headers: headers})
@@ -22,7 +23,7 @@ export class UserService {
 
       createUser(password, userName){
         const url = ApiEndpointConfig.getPath('createexternaluser');
-        const httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+        const httpHeaders = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
         const body= JSON.stringify({password:password,  userName:userName });
         const httpOptions = {
             headers: httpHeaders

@@ -1,5 +1,5 @@
 export default {
-    WebApiUrl : 'http://157.230.224.75:81/api/',
+    WebApiUrl : 'http://localhost:9800/api/',
     BaseUrl : '/',
     RootPath : '/vendor/IzendaSynergy',
     CssFile : 'izenda-ui.css',
