@@ -11,9 +11,7 @@ var ExportReport = createReactClass({
     },
     componentDidMount: function () {
         var reportPartId = this.props.match.params.id;
-        
-        var token = 'i7di+WoXTvjk47YhJGhictiBOqsUGIkbgd5B8XizEJ56DC4Ark8TO9YWUs50BH+HFnukB2H1pFZfza4psZCDOA==';
-        
+        var token = localStorage.izendatoken;
         this.currentUserContext = {token: token};
         IzendaSynergy.setCurrentUserContext(this.currentUserContext);
         IzendaSynergy.renderReportPart(document.getElementById('izenda-export-reportpart'), {
