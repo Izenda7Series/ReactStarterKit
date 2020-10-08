@@ -20,23 +20,24 @@ export class UserService  {
           .map((response) => response.json());
       }
 
-
       createUser(password, userName){
         const url = ApiEndpointConfig.getPath('createexternaluser');
-        const httpHeaders = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-        const body= JSON.stringify({password:password,  userName:userName });
-        const httpOptions = {
-            headers: httpHeaders
-        };
-  
-        return this.httpClient.post(url, body, httpOptions )
-            .map((response) => {
-              if (response === 'success')
-                return true;
-              else
-                return false;
-            });
+        
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        
+        request.body= JSON.stringify({password:password,  userName:userName });
+        request.send();
 
+        if (request.response === 'success'){
+            return true;
+        }else{
+            return false;
+        }
+
+
+       
       }
 
 

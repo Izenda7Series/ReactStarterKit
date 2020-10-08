@@ -11,19 +11,22 @@ export class TenantService  {
 
     CreateTenant(name, description){
         const url = ApiEndpointConfig.getPath('createtenant');
-        const httpHeaders = new Headers({ 'Content-Type': 'application/json; charset=utf-8' });
-        const body= JSON.stringify({TenantName: name , TenantDescription: description});
-        const httpOptions = {
-            headers: httpHeaders
-        };
-  
-        return this.httpClient.post(url, body, httpOptions )
-            .map((response) => {
-              if (response === 'success')
-                return true;
-              else
-                return false;
-            });
+        
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+       
+        request.body= JSON.stringify({TenantName: name , TenantDescription: description});
+        request.send();
+
+        if (request.response === 'success'){
+            return true;
+        }else{
+            return false;
+        }
+
+
+       
       }
 
 }
