@@ -9,15 +9,15 @@ export class TenantService  {
     }
 
 
-    CreateTenant(name, description){
+    CreateTenant(id, description, name){
         const url = ApiEndpointConfig.getPath('createtenant');
         
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
         request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
        
-        request.body= JSON.stringify({TenantName: name , TenantDescription: description});
-        request.send();
+        //request.body= JSON.stringify({TenantID: id , TenantDescription: description, tenantName:name});
+        request.send(JSON.stringify({TenantID: id , TenantDescription: description, TenantName:name}));
 
         if (request.response === 'success'){
             return true;

@@ -14,7 +14,9 @@ class CreateUser extends Component {
 
     
         this.state = {
-            
+          isadmin:false,
+            FirstName:'',
+            LastName:'',
             username: '',
             password: '',
             submitted: false,
@@ -30,6 +32,27 @@ class CreateUser extends Component {
     }
     componentDidMount() {
         this.dom = this.render();
+
+  
+  
+
+        fetch("http://localhost:3358/tenant/allTenants")
+    .then((response) => {
+      return response.json();
+    })
+    .then(data => {
+      let teamsFromApi = data.map(team => {
+        return {value: team, display: team}
+      });
+      this.setState({
+        teams: [{value: '', display: '(Select your favourite team)'}].concat(teamsFromApi)
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+
+
+
     }
     componentWillUnmount() {
         this.DestroyDom(this.dom);
@@ -45,12 +68,12 @@ class CreateUser extends Component {
     
         //stop here if form is invalid
         if (!(username && password)) {
-          return;
+          //return;
         }
     
         this.setState({ loading: true });
         var a = new UserService();
-        a.createUser(username, password);
+        a.createUser(username, password,this.state.FirstName,this.state.LastName);
       }
 
       handleInputChange(property) {
@@ -67,6 +90,8 @@ class CreateUser extends Component {
         this.setState({ [name]: value });
       }
 
+     
+
 
     render() {
         return (
@@ -75,16 +100,36 @@ class CreateUser extends Component {
                 <h3>Create User</h3>
                
 
+
+
                 <Form.Group>
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control  value={this.state.username} onChange={this.handleInputChange('username')} type="text" placeholder="User Name" />
+                    <Form.Label>Selected Role</Form.Label>
+                    <br/>
+                    <select value={this.state.isAdmin} onChange={this.handleInputChange('isAdmin')}>
+                   
+                  </select>
+                </Form.Group>
+
+
+                <Form.Group>
+                    <Form.Label>Is Admin</Form.Label>
+                   
+                    <Form.Check   value={this.state.isAdmin} onChange={this.handleInputChange('isAdmin')}  />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control  value={this.state.FirstName} onChange={this.handleInputChange('FirstName')} type="text" placeholder="First Name" />
+                </Form.Group>
+
+                
+                <Form.Group>
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control  value={this.state.LastName} onChange={this.handleInputChange('LastName')} type="text" placeholder="Last Name" />
                 </Form.Group>
 
                
-                <Form.Group>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control value={this.state.password} onChange={this.handleInputChange('password')} type="password" placeholder="Password" />
-                </Form.Group>
+              
 
 
                 <Button type="submit" >Submit</Button>

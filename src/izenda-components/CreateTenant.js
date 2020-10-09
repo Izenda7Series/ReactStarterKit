@@ -15,6 +15,7 @@ class CreateTenant extends Component {
     
         this.state = {
             
+            id:'',
             name: '',
             description: '',
             submitted: false,
@@ -38,19 +39,23 @@ class CreateTenant extends Component {
 
 
     handleSubmit(event) {
+     
         event.preventDefault();
         this.setState({ submitted: true });
-        const name = this.state.name;
+        const id = this.state.id;
         const description = this.state.description;
-    
+        const myname = this.state.name;
+        
         //stop here if form is invalid
-        if (!(name && description)) {
-          return;
+        if (!(id && description && myname)) {
+         // return;
         }
-    
+        
         this.setState({ loading: true });
+       
         var a = new TenantService();
-        a.CreateTenant(name, description);
+        a.CreateTenant(id, description, myname);
+        
       }
 
       handleInputChange(property) {
@@ -69,6 +74,7 @@ class CreateTenant extends Component {
 
 
     render() {
+     
         return (
             <Container>
                 <Form onSubmit={this.handleSubmit}>
@@ -76,7 +82,12 @@ class CreateTenant extends Component {
                
 
                 <Form.Group>
-                    <Form.Label>Tenant Name</Form.Label>
+                    <Form.Label>Tenant ID</Form.Label>
+                    <Form.Control  value={this.state.id} onChange={this.handleInputChange('id')} type="text" placeholder="Tenant ID" />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control  value={this.state.name} onChange={this.handleInputChange('name')} type="text" placeholder="Tenant Name" />
                 </Form.Group>
 
@@ -84,6 +95,8 @@ class CreateTenant extends Component {
                     <Form.Label>Description</Form.Label>
                     <Form.Control  value={this.state.description} onChange={this.handleInputChange('description')} type="text" placeholder="Description" />
                 </Form.Group>
+
+             
 
                 <Button type="submit" >Submit</Button>
               </Form>
