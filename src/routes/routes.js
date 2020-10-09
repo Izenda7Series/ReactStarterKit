@@ -16,6 +16,7 @@ import Dashboard from '../izenda-components/Dashboard';
 import DashboardViewer from '../izenda-components/DashboardViewer';
 import ReportCustomFilter from '../izenda-components/ReportCustomFilter';
 import NavbarComponent from '../navbar/Navbar';
+import ExportManager from '../izenda-components/ExportManager';
 
 function AppRouter() {
   return (
@@ -57,7 +58,7 @@ const DefaultContainer = (props) => (
     <PrivateRoute path='/izenda/dashboarddesigner' component={DashboardDesigner} />
     <PrivateRoute path='/izenda/dashboard' component={Dashboard} />
     <PrivateRoute path='/izenda/dashboardviewer' component={DashboardViewer} />
-    
+    <PrivateRoute path='/myprofile' component={ExportManager} />
   </div>
 )
 

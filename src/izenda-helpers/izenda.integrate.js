@@ -1,6 +1,4 @@
 import config from './config';
-
-//const IzendaSynergy = require('../../libs/IzendaSynergy/izenda_ui');
 import IzendaSynergy from '../../libs/IzendaSynergy/izenda_ui';
 
 export default class IzendaIntegrate {
@@ -120,11 +118,20 @@ export default class IzendaIntegrate {
   }
 
   RenderExportViewer(reportPartId) {
-    IzendaSynergy.setCurrentUserContext({ token: 'i7di+WoXTvjk47YhJGhictiBOqsUGIkbgd5B8XizEJ56DC4Ark8TO9YWUs50BH+HFnukB2H1pFZfza4psZCDOA==' })
+    const token = localStorage.getItem("izendatoken");
+    IzendaSynergy.setCurrentUserContext({ token: token });
     IzendaSynergy.renderReportPart(document.getElementById('export-root'), {
       "id": reportPartId,
       "useQueryParam": true,
     });
+  }
+
+  RenderExportManager() {
+    const token = localStorage.getItem("izendatoken");
+    IzendaSynergy.setCurrentUserContext({ token: token });
+    let dom = document.getElementById('izenda-root');
+    IzendaSynergy.renderExportManagerPage(dom);
+    return dom;
   }
 
   DestroyDom(dom) {
