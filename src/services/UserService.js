@@ -1,6 +1,7 @@
 
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
 
+
 export class UserService  {
     constructor() {
         this.state = {
@@ -12,26 +13,18 @@ export class UserService  {
 
 
 
-    getUsers() {
-        // add authorization header with jwt token
-        const headers = new Headers({ Authorization: 'Bearer ' + this.authenticationService.token });
     
-        // get users from api
-        return this.http.get('/api/users', {headers: headers})
-          .map((response) => response.json());
-      }
 
-      createUser(password, userName,FirstName,LastName){
+      createUser( UserID,FirstName,LastName, tenant, role, admin){
         const url = ApiEndpointConfig.getPath('createexternaluser');
         
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
         request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+       console.log("User Service:  Tenant:  "+tenant+",  Role:  "+role);
         
-      
-        
-request.send(JSON.stringify({"Tenant":"","UserID":userName,"IsAdmin":false,"FirstName":FirstName,"LastName":LastName,"SelectedRole":""}));
-//request.send(JSON.stringify({password:password,  userID:userName, FirstName:FirstName, LastName:LastName}));
+request.send(JSON.stringify({"Tenant":+tenant,"UserID":UserID,"IsAdmin":admin,"FirstName":FirstName,"LastName":LastName,"SelectedRole":role}));
+
         if (request.response === 'success'){
             return true;
         }else{
