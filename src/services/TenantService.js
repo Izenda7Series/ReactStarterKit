@@ -1,13 +1,5 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
 export class TenantService {
-    constructor() {
-        this.state = {
-            data: null,
-        };
-        // set token if saved in local storage
-        this.token = localStorage.getItem('izendaToken');
-    }
-
     async CreateTenant(id, name) {
         try {
             let response = await fetch(ApiEndpointConfig.getPath('createtenant'), {
@@ -21,9 +13,26 @@ export class TenantService {
                     TenantName: name
                 })
             });
-            await response.json();
             if (response.status === 200) {
                 return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    async GetAllTenants() {
+        try {
+            let response = await fetch(ApiEndpointConfig.getPath('izendaAPI')+'/tenant/allTenants',{
+                method: 'GET',
+                headers: { 'access_token': localStorage.getItem('izendatoken')}
+            });
+            let json = await response.json();
+            if (response.status === 200) {
+                return json;
             } else {
                 return false;
             }

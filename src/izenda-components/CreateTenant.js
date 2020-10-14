@@ -8,6 +8,7 @@ class CreateTenant extends Component {
   constructor(props) {
     super(props);
     this.izIntegrate = new IzendaIntegrate();
+    this.tenantService = new TenantService();
     this.dom = {};
     this.state = {
       id: '',
@@ -16,7 +17,8 @@ class CreateTenant extends Component {
       submitted: false,
       loading: false,
       message: '',
-      error: ''
+      error: '',
+      tenants: []
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,6 +26,7 @@ class CreateTenant extends Component {
 
   componentDidMount() {
     this.dom = this.render();
+    this.getTenantList();
   }
 
   handleSubmit(event) {
@@ -37,8 +40,7 @@ class CreateTenant extends Component {
       return;
     }
     this.setState({ loading: true });
-    const tenantService = new TenantService();
-    tenantService.CreateTenant(id, myname).then(result => {
+    this.tenantService.CreateTenant(id, myname).then(result => {
       if (result) {
         this.setState({
           loading: false,
@@ -68,6 +70,28 @@ class CreateTenant extends Component {
     this.setState({ [name]: value });
   }
 
+  getTenantList() {
+    this.tenantService.GetAllTenants().then(result => {
+      if (result && result.length > 0) {
+        this.setState({ tenants: result });
+      }
+    });
+  }
+
+  tenantList() {
+    const tenants = this.state.tenants;
+    if (tenants.length > 0) {
+      return (
+        <ul style={{ maxHeight: '300px', overflowY: 'auto' }}>
+          {
+            tenants.map(el => <li key={el.name}>{el.name} ({el.active ? 'active' : 'inactive'})</li>)
+          }
+        </ul>
+      )
+    } else {
+      return <h5>No Tenants found</h5>;
+    }
+  }
 
   render() {
     const hasError = this.state.error;
@@ -80,7 +104,7 @@ class CreateTenant extends Component {
     }
 
     return (
-      <Container fluid className="form-container">
+      <Container style={{padding: '1em'}}>
         <Row>
           <Col md={8}>
             <h2>Create Tenant</h2>
@@ -99,9 +123,20 @@ class CreateTenant extends Component {
               <div>{alerts}</div>
             </Form>
           </Col>
-          <Col md={4}></Col>
+          <Col md={4}>
+            <div>
+              <h4>Further Instruction</h4>
+              <hr />
+              <p>If you want to add &quot;Description&quot; or enable a Module(s) to a newly created tenant, please go to Settings → Tenant Setup and update it.</p>
+            </div>
+            <div>
+              <h4>Tenants</h4>
+              <hr />
+              {this.tenantList()}
+            </div>
+          </Col>
         </Row>
-      </Container>
+      </Container >
     );
   }
 }
