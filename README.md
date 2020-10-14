@@ -16,38 +16,44 @@ The ReactStarterKit illustrates the concepts of integrating Izenda into ReactSta
  
 ### Deploying the Izenda API & Database
 
-In this integration kit, you will be following the same steps that you would to set up the Angular Starter Kit. For Izenda developers, this integration is based off the newer Angular Starter Kit rather than the older Angular2StarterKit.
+This Kit requires the SampleAuthApi repository in order to successfully implement. <a href="https://github.com/Izenda7Series/SampleAuthApi">You can find that repository here.</a>
 
-- You will first need to set up the Izenda configuration database. Create a database with a name of your chosing then using the Izenda.sql script located in the directory "integration/DbScripts". You will need to check the database version in the Izenda.DbVersion table and upgrate to the necessary version using the schema migration tool available at downloads.izenda.com
+- Create a database named 'IzendaAngular' (This is the database for the Izenda configuration. It contains report definitions, dashboards,etc.). You may use any name of your choosing, just be sure to modify the script below to use the new database name. 
+- Download and execute the Izenda.sql script from the from the SampleAuthApi repository in the DbScripts directory. Please note, the database version can be found in the IzendaDBVersion table of this database. This will be necessary when obtaining the proper resources in the following steps.  
+
+- Download and deploy the Izenda API to IIS. The API can be found on our <a href="https://downloads.izenda.com/">Downloads Page</a> in our version directories. Select the version directory that corresponds Izenda configuration database version and click the "API" resource in the directory. 
+
+- Deploy the Izenda API to IIS. The instructions for installing the Izenda API will follow the same instructions for <a href= "https://www.izenda.com/docs/install/doc_installation_guide.html#izenda-installation-as-two-separate-sites"> installing a standalone version of the Izenda's API.</a>
+
+- Download a copy of the <a href="https://github.com/Izenda7Series/Mvc5StarterKit/blob/master/Mvc5StarterKit/izendadb.config">izendadb.config</a> file and copy it to the root of your API deployment. Then modify the file with a valid connection string to this new database.
 
 ### Deploying the WebAPI & Database
-- Create another database of your choosing for the Web Api database. This is the database for the WebApi application. It contains the users, roles, tenants used to login. You may use any name of your choosing, just be sure to modify the script below to use the new database name.
-- Use the  Starterkit_Api.sql script located in the "integration/DbScripts" directory to generate the necessary schema for the database. 
-- Run/Deploy the WebApiStarterKit solution located in integration/WebApiStarterKit and modify the web.config (Line 75) file with a valid connection string to this new database.
+- Run the StarterKit_Api.sql' from the SampleAuthApi repository in the DbScripts directory. This is the database for the WebApi application. It contains the users, roles, tenants used to login. You may use any name of your choosing, just be sure to modify the script below to use the new database name.
+- Modify the web.config file (Line 75) in from the SampleAuthApi repository under the WebApi2StarterKit directory with a valid connection string to this new database.
 
 ```xml
   <connectionStrings>
     <add name="DefaultConnection" connectionString="[your connection string here]" providerName="System.Data.SqlClient" />
   </connectionStrings>
 ``` 
-- Modify the 'IzendaApiUrl' value in the WebApiStarterKit web.config (Line 80) file with the url of the Izenda API.
+- Modify the 'IzendaApiUrl' value in the same web.config (Line 80) file with the url of the Izenda API.
 ```xml
 <add key="IzendaApiUrl" value="http://localhost:9999/api/" />
 ```
 
 ### Deploying the Retail Database (optional)
-Create the Retail database with the RetailDbScript.sql located in the "integration/DbScripts" directory.
+Create the Retail database with the RetailDbScript.sql from the SampleAuthApi repository in the DbScripts directory.
 
 ### Configuring ReactStarterKit
-- Change the 'WebApiUrl' value in the src/izenda-helpers/config.js file with the URL for the Izenda API. 
+- Change the 'izendaApiEndPoint' value in the src/izenda-helpers/ApiEndpointConfig.js file with the URL for the Izenda API. 
 
 ```javascript
-"WebApiUrl": "http://localhost:9999/api/",
+const izendaApiEndPoint = 'http://localhost:9999/';
 ``` 
 - Open the src/izenda-helpers/ApiEndpointConfig.js  file and ensure 'apiEndPoint' is set. This will default to http://localhost:3358/ and can be left as is. 
 
 ```javascript
-let apiEndPoint = "http://localhost:3358/";
+const apiEndPoint = 'http://localhost:3358/';
 ``` 
 - Download a copy of the EmbeddedUI. The EmbeddedUI can be found on our <a href="https://downloads.izenda.com/">Downloads Page</a> in our version directories. Select the version directory that corresponds Izenda configuration database version and click the "EmbeddedUI" resource in the directory. 
 - Extract the files of the EmbeddedUI and place them in the libs/IzendaSynergy directory.
@@ -151,3 +157,5 @@ WHERE [Name] = 'AuthGetAccessTokenUrl'
 - <a href="https://www.izenda.com/docs/dev/.developer_guide_integrated_scenarios.html">Developer Guide for Integrated Scenarios</a>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+In order to get the create-react-app to work with Izenda, this project used `npm run eject` in order to generate the webpack configuration files needed to load the IzendaSynergy module correctly. Since the EmbeddedUI is such a large module, the usual import means did not work for this implementation and custom webpack configuration was used in file `webpack.config.js`. 

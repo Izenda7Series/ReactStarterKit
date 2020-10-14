@@ -1,5 +1,11 @@
 'use strict';
 
+/** IZENDA INTEGRATION INFORMATION
+ * This file was generated via the npm run eject in the create-react-app project. 
+ * Below there are modifications specific to getting Izenda working properly with create-react-app. 
+ * You can find them indicated by IZENDAMOD
+ */
+
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
