@@ -30,7 +30,6 @@ class CreateTenant extends Component {
     event.preventDefault();
     this.setState({ submitted: true });
     const id = this.state.id;
-    const description = this.state.description;
     const myname = this.state.name;
     //stop here if form is invalid
     if (!(id && myname)) {
@@ -39,18 +38,21 @@ class CreateTenant extends Component {
     }
     this.setState({ loading: true });
     const tenantService = new TenantService();
-    const result = tenantService.CreateTenant(id, description, myname);
-    if (result) {
-      this.setState({
-        loading: false,
-        message: 'Tenant has been created successfully'
-      });
-    } else {
-      this.setState({
-        loading: false,
-        error: 'Could not create tenant'
-      });
-    }
+    tenantService.CreateTenant(id, myname).then(result => {
+      if (result) {
+        this.setState({
+          loading: false,
+          message: 'Tenant has been created successfully',
+          error: ''
+        });
+      } else {
+        this.setState({
+          loading: false,
+          error: 'Could not create tenant',
+          message: ''
+        });
+      }
+    });
   }
 
   handleInputChange(property) {
@@ -65,16 +67,16 @@ class CreateTenant extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   }
-  
+
 
   render() {
     const hasError = this.state.error;
     const hasMessage = this.state.message;
     let alerts;
     if (hasError) {
-      alerts = <hr /> + <Alert variant="danger">{this.state.error}</Alert>
-    } else if(hasMessage) {
-      alerts = <hr /> + <Alert variant="success">{this.state.message}</Alert>
+      alerts = (<div><hr /><Alert variant="danger">{this.state.error}</Alert></div>);
+    } else if (hasMessage) {
+      alerts = (<div><hr /><Alert variant="success">{this.state.message}</Alert></div>);
     }
 
     return (
@@ -94,7 +96,7 @@ class CreateTenant extends Component {
                 <Form.Control value={this.state.name} onChange={this.handleInputChange('name')} type="text" placeholder="Tenant Name" />
               </Form.Group>
               <Button type="submit" >Submit</Button>
-              {alerts}
+              <div>{alerts}</div>
             </Form>
           </Col>
           <Col md={4}></Col>
