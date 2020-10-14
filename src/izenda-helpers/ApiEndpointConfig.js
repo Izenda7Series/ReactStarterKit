@@ -1,6 +1,9 @@
 export default class ApiEndpointConfig {
     static getPath(value) {
+        // The following line defines the URL to the authentication application (the WebApi2StarterKit or your application)
         const apiEndPoint = 'http://localhost:3358/';
+        // The following line defines the URL to the IzendaAPI
+        const izendaApiEndPoint = 'http://localhost:3106/';
         switch (value) {
             case 'register':
                 return apiEndPoint + 'api/Account/Register';
@@ -16,6 +19,10 @@ export default class ApiEndpointConfig {
                 return apiEndPoint + 'api/Account/CreateUser';
             case 'gettenants':
                 return apiEndPoint + 'api/Account/GetTenants';
+            case 'izendaAPI':
+                return izendaApiEndPoint + 'api';
+            case 'authAPI':
+                return apiEndPoint + 'api';
             default:
                 return '';
         }

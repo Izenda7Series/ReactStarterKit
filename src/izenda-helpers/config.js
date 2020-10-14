@@ -1,5 +1,6 @@
+import ApiEndpointConfig from './ApiEndpointConfig';
 export default {
-    WebApiUrl : 'http://localhost:8081/api/',
+    WebApiUrl : ApiEndpointConfig.getPath('izendaAPI'),
     BaseUrl : '/',
     RootPath : '/vendor/IzendaSynergy',
     CssFile : 'izenda-ui.css',
