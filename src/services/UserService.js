@@ -1,14 +1,7 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
 
 export class UserService {
-    constructor() {
-        this.state = {
-            data: null,
-        };
-        // set token if saved in local storage
-        this.token = localStorage.getItem('izendaToken');
-    }
-    createUser(UserID, FirstName, LastName, tenant, role, admin) {
+    createUser2(UserID, FirstName, LastName, tenant, role, admin) {
         const url = ApiEndpointConfig.getPath('createexternaluser');
 
         let request = new XMLHttpRequest();
@@ -22,5 +15,57 @@ export class UserService {
             return true;
         }
         return false;
+    }
+
+    async LoadUsers(tenant) {
+        try {
+            const url = ApiEndpointConfig.getPath('izendaAPI') + '/user/all' + (tenant === undefined ? '' : '/' + tenant.id);
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'access_token': localStorage.getItem('izendatoken'),
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8'
+                }
+            });
+            let json = await response.json();
+            if (response.status === 200) {
+                return json;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error(error)
+            return false;
+        }
+    }
+
+    async CreateUser(tenant, role, userId, isAdmin, firstName, lastName) {
+        try {
+            let response = await fetch(ApiEndpointConfig.getPath('createuser'), {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify({
+                    Tenant: tenant.name,
+                    UserId: userId,
+                    IsAdmin: isAdmin,
+                    FirstName: firstName,
+                    LastName: lastName,
+                    SelectedRole: role
+                })
+            });
+            let json = await response.json();
+            if (response.status === 200) {
+                return json;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error(error)
+            return false;
+        }
     }
 }

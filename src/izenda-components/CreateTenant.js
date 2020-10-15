@@ -9,7 +9,6 @@ class CreateTenant extends Component {
     super(props);
     this.izIntegrate = new IzendaIntegrate();
     this.tenantService = new TenantService();
-    this.dom = {};
     this.state = {
       id: '',
       name: '',
@@ -25,7 +24,6 @@ class CreateTenant extends Component {
   }
 
   componentDidMount() {
-    this.dom = this.render();
     this.getTenantList();
   }
 
@@ -54,6 +52,12 @@ class CreateTenant extends Component {
           message: ''
         });
       }
+    }).error(() => {
+      this.setState({
+        loading: false,
+        error: 'Could not create tenant',
+        message: ''
+      });
     });
   }
 
@@ -93,18 +97,19 @@ class CreateTenant extends Component {
     }
   }
 
-  render() {
+  showAlerts() {
     const hasError = this.state.error;
     const hasMessage = this.state.message;
-    let alerts;
     if (hasError) {
-      alerts = (<div><hr /><Alert variant="danger">{this.state.error}</Alert></div>);
+      return (<div><hr /><Alert variant="danger">{this.state.error}</Alert></div>);
     } else if (hasMessage) {
-      alerts = (<div><hr /><Alert variant="success">{this.state.message}</Alert></div>);
+      return (<div><hr /><Alert variant="success">{this.state.message}</Alert></div>);
     }
+  }
 
+  render() {
     return (
-      <Container style={{padding: '1em'}}>
+      <Container style={{ padding: '1em' }}>
         <Row>
           <Col md={8}>
             <h2>Create Tenant</h2>
@@ -120,7 +125,7 @@ class CreateTenant extends Component {
                 <Form.Control value={this.state.name} onChange={this.handleInputChange('name')} type="text" placeholder="Tenant Name" />
               </Form.Group>
               <Button type="submit" >Submit</Button>
-              <div>{alerts}</div>
+              <div>{this.showAlerts()}</div>
             </Form>
           </Col>
           <Col md={4}>

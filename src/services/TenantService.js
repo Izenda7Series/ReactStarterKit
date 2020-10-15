@@ -26,9 +26,28 @@ export class TenantService {
 
     async GetAllTenants() {
         try {
-            let response = await fetch(ApiEndpointConfig.getPath('izendaAPI')+'/tenant/allTenants',{
+            let response = await fetch(ApiEndpointConfig.getPath('izendaAPI') + '/tenant/allTenants', {
                 method: 'GET',
-                headers: { 'access_token': localStorage.getItem('izendatoken')}
+                headers: { 'access_token': localStorage.getItem('izendatoken') }
+            });
+            let json = await response.json();
+            if (response.status === 200) {
+                return json;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    async GetRoles(tenant) {
+        try {
+            const url = ApiEndpointConfig.getPath('izendaAPI') + '/role/all' + (tenant === undefined ? '' : '/' + tenant.id);
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: { 'access_token': localStorage.getItem('izendatoken') }
             });
             let json = await response.json();
             if (response.status === 200) {
