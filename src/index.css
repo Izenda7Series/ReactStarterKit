@@ -18,3 +18,14 @@ code {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* Fixes bootstrap conflict caret issue */
+.izenda-container .dropdown-toggle::after {
+  content: unset;
+}
+
+/* Fixes boostrap nav tab issue */
+.izenda-container .nav {
+  display: unset;
+  flex-wrap: unset;
+}
