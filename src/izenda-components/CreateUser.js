@@ -174,6 +174,8 @@ class CreateUser extends Component {
           }
         </ul>
       )
+    } else {
+      return <h5>No Users found</h5>;
     }
   }
 
