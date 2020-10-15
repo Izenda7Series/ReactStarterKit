@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-
 import Home from '../home/Home'
 import Login from '../login/Login';
 import IzendaHome from '../izenda-components/IzendaHome';
@@ -17,8 +16,11 @@ import DashboardViewer from '../izenda-components/DashboardViewer';
 import ReportCustomFilter from '../izenda-components/ReportCustomFilter';
 import NavbarComponent from '../navbar/Navbar';
 import ExportManager from '../izenda-components/ExportManager';
+import CreateUser from '../izenda-components/CreateUser';
+import CreateTenant from '../izenda-components/CreateTenant';
 
 function AppRouter() {
+
   return (
     <Router>
       <Switch>
@@ -59,6 +61,12 @@ const DefaultContainer = (props) => (
     <PrivateRoute path='/izenda/dashboard' component={Dashboard} />
     <PrivateRoute path='/izenda/dashboardviewer' component={DashboardViewer} />
     <PrivateRoute path='/myprofile' component={ExportManager} />
+    <PrivateRoute exact path='/izenda/createuser' component={CreateUser} />
+    {/* Subreport Route */}
+    <PrivateRoute exact path='/izenda/report/view/:id' component={ReportViewer} />
+    {/* Export Routes */}
+    <Route exact path='/viewer/reportpart/:id' component={ExportReport} />
+    <PrivateRoute exact path='/izenda/createtenant' component={CreateTenant} />
   </div>
 )
 

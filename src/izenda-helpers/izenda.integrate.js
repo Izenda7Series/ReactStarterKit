@@ -29,6 +29,9 @@ export default class IzendaIntegrate {
     return dom;
   }
 
+  
+
+
   RenderReportList() {
     this.setContext();
     const dom = document.getElementById('izenda-root');

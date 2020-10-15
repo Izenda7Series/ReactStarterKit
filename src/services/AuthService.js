@@ -16,9 +16,9 @@ export class AuthService {
         }
 
         let formBody = [];
-        for (var property in body) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(body[property]);
+        for (let property in body) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(body[property]);
             formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
