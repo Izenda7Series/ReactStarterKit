@@ -40,7 +40,7 @@ export class UserService {
         }
     }
 
-    async CreateUser(tenant, role, userId, isAdmin, firstName, lastName) {
+    async CreateUser(tenantName, role, userId, isAdmin, firstName, lastName) {
         try {
             let response = await fetch(ApiEndpointConfig.getPath('createuser'), {
                 method: 'POST',
@@ -49,7 +49,7 @@ export class UserService {
                     'Content-Type': 'application/json; charset=utf-8'
                 },
                 body: JSON.stringify({
-                    Tenant: tenant.name,
+                    Tenant: tenantName,
                     UserId: userId,
                     IsAdmin: isAdmin,
                     FirstName: firstName,
