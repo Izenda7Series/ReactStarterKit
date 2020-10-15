@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IzendaIntegrate from '../izenda-helpers/izenda.integrate';
-import { Container, Form, Button, Row, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Row, Alert, Col } from 'react-bootstrap';
 import { UserService } from '../services/UserService';
 import { TenantService } from '../services/TenantService';
 
@@ -35,6 +35,7 @@ class CreateUser extends Component {
   componentDidMount() {
     this.loadTenants();
     this.loadRoles();
+    this.loadUsers();
   }
 
   handleSubmit(event) {
@@ -135,7 +136,7 @@ class CreateUser extends Component {
     function loadOptions() {
       this.loadRoles();
       this.loadUsers();
-    }    
+    }
   }
 
   tenantSelect() {
@@ -163,6 +164,19 @@ class CreateUser extends Component {
     }
   }
 
+  usersList() {
+    const users = this.state.users;
+    if (users.length > 0) {
+      return (
+        <ul style={{ maxHeight: '350px', overflowY: 'auto' }}>
+          {
+            users.map(el => <li key={el.name}>{el.name} ({el.active ? 'active' : 'inactive'})</li>)
+          }
+        </ul>
+      )
+    }
+  }
+
   showAlerts() {
     const hasError = this.state.error;
     const hasMessage = this.state.message;
@@ -175,47 +189,63 @@ class CreateUser extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ padding: '1em' }}>
         <Row>
-          <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
-            <h3>Create User</h3>
-            <Form.Group>
-              <Form.Label>Tenant</Form.Label>
-              <br />
-              <Form.Control as="select" value={this.state.tenant} onChange={(e) => this.tenantChanged(e)} custom>
-                <option value={undefined}>Select tenant</option>
-                {this.tenantSelect()}
-              </Form.Control>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Selected Role</Form.Label>
-              <br />
-              <Form.Control as="select" value={this.state.selectedRole} onChange={this.handleInputChange('selectedRole')} custom>
-                <option value={undefined}>Select role</option>
-                {this.roleSelect()}
-              </Form.Control>
-            </Form.Group>
-            {this.adminCheckBox()}
-            <Form.Group controlId="validationCustom1">
-              <Form.Label>User ID</Form.Label>
-              <Form.Control value={this.state.userId} onChange={this.handleInputChange('userId')} type="text" placeholder="user@company.com" required />
-              <Form.Control.Feedback type="invalid">Please enter a User ID</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="validationCustom2">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control value={this.state.firstName} onChange={this.handleInputChange('firstName')} type="text" placeholder="First Name" required />
-              <Form.Control.Feedback type="invalid">Please enter a First Name</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group controlId="validationCustom3">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control value={this.state.lastName} onChange={this.handleInputChange('lastName')} type="text" placeholder="Last Name" required />
-              <Form.Control.Feedback type="invalid">Please enter a Last Name</Form.Control.Feedback>
-            </Form.Group>
-            <Button type="submit" >Submit</Button>
-            <div>{this.showAlerts()}</div>
-          </Form>
+          <Col md={8}>
+            <h2>Create User</h2>
+            <h4>Create a new user</h4>
+            <hr />
+            <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
+              <Form.Group>
+                <Form.Label>Tenant</Form.Label>
+                <br />
+                <Form.Control as="select" value={this.state.tenant} onChange={(e) => this.tenantChanged(e)} custom>
+                  <option value={undefined}>Select tenant</option>
+                  {this.tenantSelect()}
+                </Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Selected Role</Form.Label>
+                <br />
+                <Form.Control as="select" value={this.state.selectedRole} onChange={this.handleInputChange('selectedRole')} custom>
+                  <option value={undefined}>Select role</option>
+                  {this.roleSelect()}
+                </Form.Control>
+              </Form.Group>
+              {this.adminCheckBox()}
+              <Form.Group controlId="validationCustom1">
+                <Form.Label>User ID</Form.Label>
+                <Form.Control value={this.state.userId} onChange={this.handleInputChange('userId')} type="text" placeholder="user@company.com" required />
+                <Form.Control.Feedback type="invalid">Please enter a User ID</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="validationCustom2">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control value={this.state.firstName} onChange={this.handleInputChange('firstName')} type="text" placeholder="First Name" required />
+                <Form.Control.Feedback type="invalid">Please enter a First Name</Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group controlId="validationCustom3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control value={this.state.lastName} onChange={this.handleInputChange('lastName')} type="text" placeholder="Last Name" required />
+                <Form.Control.Feedback type="invalid">Please enter a Last Name</Form.Control.Feedback>
+              </Form.Group>
+              <Button type="submit" >Submit</Button>
+              <div>{this.showAlerts()}</div>
+            </Form>
+          </Col>
+          <Col md={4}>
+            <div>
+              <h4>Further Instruction</h4>
+              <hr />
+              <p>If you want to add &quot;Description&quot; or enable a Module(s) to a newly created user, please go to Settings → User Setup and update it.</p>
+            </div>
+            <div>
+              <h4>Users</h4>
+              <hr />
+              {this.usersList()}
+            </div>
+          </Col>
         </Row>
-      </Container>
+      </Container >
     );
   }
 }
