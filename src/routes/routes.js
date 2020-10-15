@@ -49,6 +49,7 @@ const DefaultContainer = (props) => (
   <div>
     <NavbarComponent isLoggedIn={true} {...props} />
     <PrivateRoute exact path='/' component={Home} />
+    <PrivateRoute exact path='/home' component={Home} />
     <PrivateRoute exact path='/myprofile' component={ExportManager} />
     <PrivateRoute exact path='/izenda/createtenant' component={CreateTenant} />
     <PrivateRoute exact path='/izenda/createuser' component={CreateUser} />

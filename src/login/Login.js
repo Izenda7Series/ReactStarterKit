@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import AuthService from '../services/AuthService';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 export class Login extends Component {
   constructor(props) {
@@ -13,7 +13,8 @@ export class Login extends Component {
       password: '',
       submitted: false,
       loading: false,
-      error: ''
+      error: '',
+      message: ''
     };
 
     //this.onChange = this.onChange.bind(this);
@@ -51,9 +52,8 @@ export class Login extends Component {
 
     //stop here if form is invalid
     if (!(username && password)) {
-      return;
+      this.setState({ loading: false, submitted: false, error: 'Username and Login are required' });
     }
-
     this.setState({ loading: true });
     this.login(tenant, username, password);
   }
@@ -63,20 +63,31 @@ export class Login extends Component {
       .then(result => {
         if (result) {
           // Login success
-          this.setState({loading: false})
-          this.props.history.push('/');
+          this.setState({ loading: false, message: 'Login Success!' })
+          this.props.history.push('/home');
+        } else {
+          console.log('ERROR LOGGING IN');
+          this.setState({ loading: false, error: 'Login failed for user: ' + username + '.' });
         }
-      },
-        error => {
-          console.log('ERROR LOGGING IN: ' + error);
-          this.setState({ loading: false });
-        });
+      }, error => {
+        console.log('ERROR LOGGING IN: ' + error);
+        this.setState({ loading: false, error: 'Login failed for user: ' + username + '.' });
+      });
+  }
+
+  showAlerts() {
+    const hasError = this.state.error;
+    const hasMessage = this.state.message;
+    if (hasError) {
+      return (<div><hr /><Alert variant="danger">{this.state.error}</Alert></div>);
+    } else if (hasMessage) {
+      return (<div><hr /><Alert variant="success">{this.state.message}</Alert></div>);
+    }
   }
 
   render() {
-    //const { tenant, username, password, submitted, loading, error } = this.state;
     return (
-      <Container>
+      <Container style={{ padding: '1em' }}>
         <Form onSubmit={this.handleSubmit}>
           <h3>Sign In</h3>
           <Form.Group>
@@ -99,6 +110,7 @@ export class Login extends Component {
           </Form.Group>
           <Button type="submit" disabled={this.state.loading}>Submit</Button>
         </Form>
+        {this.showAlerts()}
       </Container>
     );
   }
