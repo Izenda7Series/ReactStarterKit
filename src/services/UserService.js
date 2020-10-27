@@ -46,7 +46,8 @@ export class UserService {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json; charset=utf-8'
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'Authorization': 'Bearer ' + localStorage.getItem('tokenKey')
                 },
                 body: JSON.stringify({
                     Tenant: tenantName,
