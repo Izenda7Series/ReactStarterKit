@@ -1,22 +1,6 @@
 import ApiEndpointConfig from '../izenda-helpers/ApiEndpointConfig';
 
 export class UserService {
-    createUser2(UserID, FirstName, LastName, tenant, role, admin) {
-        const url = ApiEndpointConfig.getPath('createexternaluser');
-
-        let request = new XMLHttpRequest();
-        request.open('POST', url, true);
-        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-        console.log("User Service:  Tenant:  " + tenant + ",  Role:  " + role);
-
-        request.send(JSON.stringify({ "Tenant": +tenant, "UserID": UserID, "IsAdmin": admin, "FirstName": FirstName, "LastName": LastName, "SelectedRole": role }));
-
-        if (request.response === 'success') {
-            return true;
-        }
-        return false;
-    }
-
     async LoadUsers(tenant) {
         try {
             const url = ApiEndpointConfig.getPath('izendaAPI') + '/user/all' + (tenant === undefined ? '' : '/' + tenant.id);
